@@ -1,0 +1,55 @@
+.sidebar {
+  width: 290px;
+  min-height: 100vh;
+  background: linear-gradient(180deg, var(--color-sidebar), var(--color-sidebar-2));
+  color: white;
+  padding: 24px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.brand {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: white;
+}
+
+.user-box {
+  background: rgba(255, 255, 255, 0.12);
+  padding: 18px;
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: white;
+}
+
+.menu-btn,
+.logout-btn,
+.link-btn {
+  border: none;
+  padding: 12px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  color: white;
+}
+
+.menu-btn {
+  background: var(--color-secundario);
+}
+
+.menu-btn:hover {
+  background: var(--color-principal);
+}
+
+.logout-btn {
+  margin-top: auto;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.logout-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}

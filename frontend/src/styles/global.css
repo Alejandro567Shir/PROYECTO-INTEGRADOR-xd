@@ -1,0 +1,41 @@
+:root {
+    --color-principal: #9f1239;
+    --color-secundario: #be123c;
+    --color-fondo: #f8fafc;
+    --color-blanco: #ffffff;
+    --color-texto: #1f2937;
+    --color-sidebar: #7f1d1d;
+    --color-sidebar-2: #991b1b;
+    --color-gris-suave: #eef2f7;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  color: var(--color-texto);
+
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.4),
+      rgba(255, 255, 255, 0.4)
+    ),
+    url("../assets/images/espoch3.jpg");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+html,
+body,
+#root {
+    height: 100%;
+}
+
+#root {
+    background: transparent;
+}
