@@ -1,76 +1,68 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 
 function EstudianteDashboard({ usuario, onCerrarSesion }) {
   const [titulo, setTitulo] = useState("");
   const [archivo, setArchivo] = useState(null);
-  const [archivosSubidos, setArchivosSubidos] = useState([]);
-  const [historial, setHistorial] = useState([]);
+  const [mensajeExito, setMensajeExito] = useState("");
+  const [miProyecto, setMiProyecto] = useState(null);
 
-  const seleccionarArchivo = (e) => {
-    const file = e.target.files[0];
+  // Cargar historial al iniciar
+  useEffect(() => {
+    const cargarMiProyecto = async () => {
+      try {
+        const respuesta = await fetch(`http://localhost:3001/api/proyectos/estudiante/${usuario.id}`);
+        const data = await respuesta.json();
+        console.log("Datos recibidos del backend al cargar:", data); // Para depurar
+        if (data.success && data.proyecto) {
+          setMiProyecto(data.proyecto);
+        }
+      } catch (error) {
+        console.error("Error al cargar historial:", error);
+      }
+    };
+    cargarMiProyecto();
+  }, [usuario.id]);
 
-    if (!file) return;
+  const manejarArchivo = (e) => setArchivo(e.target.files[0]);
 
-    if (file.type !== "application/pdf") {
-      alert("Solo se permiten archivos PDF");
-      e.target.value = "";
+  const enviarProyectoFase1 = async () => {
+    if (!titulo || !archivo) {
+      alert("Por favor, llena el título y selecciona un PDF.");
       return;
     }
 
-    setArchivo(file);
-  };
+    const formData = new FormData();
+    formData.append("estudianteId", usuario.id);
+    formData.append("docenteId", 5); // OJO: Verifica que 5 sea el ID correcto de Ramiro
+    formData.append("titulo", titulo);
+    formData.append("descripcion", "Anteproyecto subido.");
+    formData.append("archivoPdf", archivo);
 
-  const eliminarArchivo = () => {
-    setArchivo(null);
+    try {
+      const respuesta = await fetch("http://localhost:3001/api/proyectos", {
+        method: "POST",
+        body: formData,
+      });
 
-    const inputFile = document.getElementById("archivo-pdf");
-    if (inputFile) inputFile.value = "";
-  };
+      const data = await respuesta.json();
+      console.log("Respuesta al subir proyecto:", data); // Para depurar
 
-  const subirPDF = () => {
-    if (titulo.trim() === "") {
-      alert("Ingrese el título del proyecto");
-      return;
+      if (data.success) {
+        setMensajeExito("¡Tu proyecto fue enviado a Fase 1 exitosamente!");
+        // Aquí estaba el error antes, si data.proyecto no viene bien, no se actualiza
+        if (data.proyecto) {
+            setMiProyecto(data.proyecto);
+        } else {
+            // Si el backend no devuelve el proyecto, recargamos la página como solución temporal
+             window.location.reload();
+        }
+      } else {
+        alert("Error del servidor: " + data.mensaje);
+      }
+    } catch (error) {
+      alert("Error de conexión con el servidor.");
     }
-
-    if (!archivo) {
-      alert("Seleccione un archivo PDF");
-      return;
-    }
-
-    const fechaActual = new Date().toLocaleString("es-EC", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-
-    setArchivosSubidos([
-      ...archivosSubidos,
-      {
-        nombre: archivo.name,
-        titulo: titulo,
-        fecha: fechaActual,
-      },
-    ]);
-
-    setHistorial([
-      ...historial,
-      {
-        fecha: fechaActual,
-        accion: `Proyecto "${titulo}" registrado con el PDF: ${archivo.name}`,
-      },
-    ]);
-
-    alert("PDF subido correctamente");
-
-    setArchivo(null);
-    setTitulo("");
-
-    const inputFile = document.getElementById("archivo-pdf");
-    if (inputFile) inputFile.value = "";
   };
 
   return (
@@ -79,101 +71,65 @@ function EstudianteDashboard({ usuario, onCerrarSesion }) {
         nombre={usuario.nombre}
         rolTexto="ESTUDIANTE"
         onCerrarSesion={onCerrarSesion}
-        onIrPanelPrincipal={() =>
-          window.scrollTo({ top: 0, behavior: "smooth" })
-        }
+        onIrPanelPrincipal={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       />
 
       <main className="content">
         <h1>Mi Proceso de Titulación</h1>
 
+        {mensajeExito && <div className="alerta-exito">✅ {mensajeExito}</div>}
+
         <div className="estudiante-layout">
-          <div>
+          {/* COLUMNA PRINCIPAL */}
+          <div className="columna-principal">
             <div className="card">
               <div className="dashboard-header-row">
                 <div>
-                  <h2>{titulo || "Sistema Web IA para la Amazonía"}</h2>
-                  <p>ID: p1</p>
+                  <h2>{miProyecto ? miProyecto.titulo : "Sube tu Proyecto / Tesis"}</h2>
+                  <p style={{ color: "#64748b" }}>ID Alumno: {usuario.id}</p>
                 </div>
-                <span className="estado-badge">Borrador</span>
+                <span className={`estado-badge ${miProyecto ? 'azul' : ''}`}>
+                  {miProyecto ? miProyecto.estado.replace(/_/g, " ") : "Borrador"}
+                </span>
               </div>
 
               <hr className="separador" />
 
-              <h3>Archivos Subidos</h3>
-
-              {archivosSubidos.length === 0 ? (
-                <p>No hay archivos subidos aún.</p>
-              ) : (
-                <ul>
-                  {archivosSubidos.map((item, index) => (
-                    <li key={index}>
-                      <strong>{item.titulo}</strong> - {item.nombre}
-                      <br />
-                      <small>{item.fecha}</small>
-                    </li>
-                  ))}
-                </ul>
-              )}
-
-              <div className="acciones-box">
-                <h3>Acciones Requeridas</h3>
-
-                <div className="acciones-row">
-                  <input
-                    type="text"
-                    placeholder="Título del proyecto"
-                    className="input-doc"
-                    value={titulo}
-                    onChange={(e) => setTitulo(e.target.value)}
-                  />
-
-                  <input
-                    id="archivo-pdf"
-                    type="file"
-                    accept="application/pdf"
-                    className="input-file"
-                    onChange={seleccionarArchivo}
-                  />
-
-                  <button className="subir-btn" onClick={subirPDF}>
-                    Subir PDF
-                  </button>
-
-                  <button className="eliminar-btn" onClick={eliminarArchivo}>
-                    Eliminar
-                  </button>
-
-                  <button className="fase-btn">Enviar a Fase 1</button>
+              {!miProyecto ? (
+                <div className="acciones-box">
+                  <h3 style={{ marginBottom: "15px" }}>Acciones Requeridas</h3>
+                  <div className="acciones-row">
+                    <input type="text" placeholder="Título del proyecto" className="input-doc" value={titulo} onChange={(e) => setTitulo(e.target.value)} />
+                    <input type="file" className="input-file" accept=".pdf" onChange={manejarArchivo} />
+                    <button className="fase-btn" onClick={enviarProyectoFase1}>Enviar a Fase 1</button>
+                  </div>
                 </div>
-
-                {archivo && (
-                  <p className="archivo-seleccionado">
-                    Archivo seleccionado: <strong>{archivo.name}</strong>
-                  </p>
-                )}
-              </div>
-            </div>
-
-            <div className="card">
-              <h3>Observaciones de Docentes</h3>
-              <p>No hay observaciones registradas.</p>
+              ) : (
+                <div className="caja-revision">
+                  <h3>📌 Proyecto en Revisión</h3>
+                  <p>Tu documento fue enviado y está siendo evaluado por el <strong>{miProyecto.docente_nombre || 'Docente Asignado'}</strong>. Te notificaremos cuando haya correcciones.</p>
+                </div>
+              )}
             </div>
           </div>
 
-          <div className="historial-card">
-            <h3>🕒 Historial del Proceso</h3>
-
-            {historial.length === 0 ? (
-              <p>No hay movimientos registrados aún.</p>
-            ) : (
-              historial.map((item, index) => (
-                <div className="historial-item" key={index}>
-                  <span className="fecha">{item.fecha}</span>
-                  <p>{item.accion}</p>
-                </div>
-              ))
-            )}
+          {/* COLUMNA LATERAL (HISTORIAL) */}
+          <div className="columna-lateral">
+            <div className="card">
+              <h3 style={{ display: "flex", alignItems: "center", gap: "8px" }}>🕒 Historial del Proceso</h3>
+              <div style={{ marginTop: "15px" }}>
+                {!miProyecto ? (
+                  <p className="historial-vacio">No hay movimientos registrados aún.</p>
+                ) : (
+                  <div className="historial-item">
+                    <h4>Enviado a Docente F1</h4>
+                    <p>
+                      Fecha: {miProyecto.fecha_creacion ? new Date(miProyecto.fecha_creacion).toLocaleString() : "Fecha no disponible"}
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </main>

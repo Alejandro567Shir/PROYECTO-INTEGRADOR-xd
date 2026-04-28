@@ -612,3 +612,187 @@ td {
 .caja-exito h3 {
   margin-top: 0;
 }
+
+/* --- ESTILOS PARA ESTUDIANTE DASHBOARD --- */
+.alerta-exito {
+  background: #d1fae5;
+  color: #065f46;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.caja-revision {
+  padding: 20px;
+  background: #f8fafc;
+  border-radius: 10px;
+  margin-top: 15px;
+}
+
+.caja-revision h3 {
+  color: #334155;
+  margin: 0 0 10px 0;
+}
+
+.caja-revision p {
+  color: #475569;
+  margin: 0;
+}
+
+.historial-vacio {
+  color: #64748b;
+  font-size: 14px;
+}
+
+.historial-item {
+  padding-left: 15px;
+  border-left: 3px solid #2563eb;
+}
+
+.historial-item h4 {
+  margin: 0 0 5px 0;
+  font-weight: bold;
+  color: #1e293b;
+  font-size: 14px;
+}
+
+.historial-item p {
+  margin: 0;
+  color: #64748b;
+  font-size: 12px;
+}
+
+/* --- ESTILOS PARA EL MODAL DE CORRECCIÓN (DOCENTE) --- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  width: 500px;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 10px; /* Para que coincida con tu diseño neobrutalista/moderno */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.modal-content h2 {
+  margin-top: 0;
+  color: #1e293b;
+}
+
+.modal-subtitle {
+  color: #64748b;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.modal-textarea {
+  width: 100%;
+  height: 120px;
+  padding: 10px;
+  margin-bottom: 15px;
+  resize: none;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-family: inherit;
+}
+
+.modal-file-group {
+  margin-bottom: 20px;
+}
+
+.modal-file-label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #334155;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.btn-cancelar {
+  padding: 10px 20px;
+  background: #cbd5e1;
+  color: #334155;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.btn-cancelar:hover {
+  background: #94a3b8;
+}
+
+.btn-enviar-eval {
+  padding: 10px 20px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+
+.btn-enviar-eval:hover {
+  background: #1d4ed8;
+}
+
+/* --- VISOR DE PDF INTEGRADO --- */
+.visor-pdf-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 20px;
+}
+
+.visor-pdf-header {
+  width: 80%;
+  max-width: 1000px;
+  display: flex;
+  justify-content: flex-end;
+  background: #1e293b;
+  padding: 10px;
+  border-radius: 8px 8px 0 0;
+}
+
+.btn-cerrar-visor {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-cerrar-visor:hover { background: #dc2626; }
+
+.visor-iframe {
+  width: 80%;
+  max-width: 1000px;
+  height: 85vh;
+  background: white;
+  border: none;
+  border-radius: 0 0 8px 8px;
+}
