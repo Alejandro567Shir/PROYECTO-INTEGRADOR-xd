@@ -89,23 +89,22 @@ function Login({ onLoginExitoso }) {
 
             <button
               className="role-item"
-              onClick={() => abrirLogin("DIRECTOR_TITULACION", "Director")}
+              onClick={() => abrirLogin("COMISION DE TITULACION", "Comisión de Titulación")}
             >
               <div className="role-info">
-                <h3>DIRECTOR</h3>
-                <p>Validación de Fase 2</p>
+                <h3>COMISIÓN DE TITULACIÓN</h3>
+                <p>Revisión posterior a Fase 1</p>
               </div>
               <span className="arrow">›</span>
             </button>
 
             <button
               className="role-item"
-            
-              onClick={() => abrirLogin("COMISION DE TITULACION", "Comisión de Titulación")}
+              onClick={() => abrirLogin("DIRECTOR_TITULACION", "Director")}
             >
               <div className="role-info">
-                <h3>COMISIÓN DE TITULACIÓN</h3>
-                <p>Gestión administrativa y seguimiento</p>
+                <h3>DIRECTOR</h3>
+                <p>Validación de Fase 2</p>
               </div>
               <span className="arrow">›</span>
             </button>

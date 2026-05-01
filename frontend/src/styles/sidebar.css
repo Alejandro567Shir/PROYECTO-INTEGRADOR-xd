@@ -53,3 +53,100 @@
 .logout-btn:hover {
   background: rgba(255, 255, 255, 0.2);
 }
+
+.sidebar-extra-btn {
+  width: 100%;
+  margin-top: 12px;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.14);
+  color: white;
+  font-weight: 800;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.sidebar-extra-btn:hover {
+  background: rgba(255, 255, 255, 0.22);
+  transform: translateY(-2px);
+}
+
+.sidebar-extra-btn.activo {
+  background: #c40f46;
+  box-shadow: 0 8px 18px rgba(196, 15, 70, 0.25);
+}
+
+.sidebar-menu-btn,
+.sidebar-extra-btn {
+  width: 100%;
+  margin-top: 14px;
+  padding: 14px 12px;
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-weight: 800;
+  cursor: pointer;
+  text-align: center;
+  transition: 0.2s ease;
+  font-size: 14px;
+}
+
+.sidebar-menu-btn {
+  background: #c40f46;
+}
+
+.sidebar-menu-btn:hover {
+  background: #e11d48;
+  transform: translateY(-2px);
+}
+
+.sidebar-extra-btn {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.sidebar-extra-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+.sidebar-extra-btn.activo {
+  background: #c40f46;
+}
+
+.sidebar-menu-btn,
+.sidebar-extra-btn {
+  width: 100%;
+  margin-top: 14px;
+  padding: 14px 12px;
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-weight: 800;
+  cursor: pointer;
+  text-align: center;
+  transition: 0.2s ease;
+  font-size: 14px;
+}
+
+.sidebar-menu-btn {
+  background: #c40f46;
+}
+
+.sidebar-menu-btn:hover {
+  background: #e11d48;
+  transform: translateY(-2px);
+}
+
+.sidebar-extra-btn {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.sidebar-extra-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+.sidebar-extra-btn.activo {
+  background: #c40f46;
+}

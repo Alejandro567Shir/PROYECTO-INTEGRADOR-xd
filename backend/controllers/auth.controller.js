@@ -24,9 +24,9 @@ const login = async (req, res) => {
       });
     }
 
-  
     if (rol === "COMISION DE TITULACION" && usuario.es_comision === true) {
-      usuario.rol = "COMISION DE TITULACION"; 
+      usuario.rol_original = usuario.rol;
+      usuario.rol = "COMISION DE TITULACION";
       return res.json({
         success: true,
         usuario: usuario,
